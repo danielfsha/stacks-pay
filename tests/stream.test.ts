@@ -1,9 +1,4 @@
-import {
-  Cl,
-  createStacksPrivateKey,
-  cvToValue,
-  signMessageHashRsv,
-} from "@stacks/transactions";
+import { Cl } from "@stacks/transactions";
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { initSimnet } from "@hirosystems/clarinet-sdk";

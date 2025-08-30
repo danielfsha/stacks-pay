@@ -6,10 +6,8 @@ import { Button } from "@/components/ui/button";
 
 const network = "testnet";
 
-function App() {
+export default function Page() {
   const [connected, setConnected] = useState(false);
-  const [newMessage, setNewMessage] = useState("");
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setConnected(isConnected());
@@ -65,5 +63,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

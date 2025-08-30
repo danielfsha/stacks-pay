@@ -3,32 +3,13 @@
 import { useState } from "react";
 import Image from "next/image";
 
+import { signIn } from "@/lib/auth-client";
+
 import { Button } from "@/components/ui/button";
 
 import WalletConnectButton from "@/components/wallet-connect-button";
 
-import { signIn } from "@/lib/auth-client";
-import AnimatedOTP from "@/app/auth/components/animated-otp";
-import SignInEmailForm from "@/app/auth/components/sign-in-form";
-import ConnectAndSign from "../components/connect-and-sign";
-
-export const FORM_STEPS = [
-  {
-    id: "email",
-    description: "Ask user to enter email",
-    component: SignInEmailForm,
-  },
-  {
-    id: "otp",
-    description: "verify the sent OTP",
-    component: AnimatedOTP,
-  },
-  {
-    id: "wallet",
-    description: "Connect wallet to verify account ownership",
-    component: ConnectAndSign,
-  },
-];
+import FORM_STEPS from "../form-steps";
 
 export default function SignInPage() {
   const [currentStep, setCurrentStep] = useState(0);

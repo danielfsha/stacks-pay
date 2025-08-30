@@ -26,7 +26,10 @@ export default function RootLayout({
         className={`${inter.className} antialiased w-screen h-screen overflow-hidden`}
       >
         <SidebarProvider className="flex h-full w-full items-start justify-start">
-          <AppSidebar />
+          <AppSidebar>
+            {/*   // this fixes an issue with not having children in the sidebar */}
+            <></>
+          </AppSidebar>
 
           <div className="h-full flex-1">{children}</div>
         </SidebarProvider>

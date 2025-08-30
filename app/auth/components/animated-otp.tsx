@@ -7,8 +7,9 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { emailOtp } from "@/lib/auth-client";
-import { FORM_STEPS } from "../sign-in/page";
 import { Button } from "@/components/ui/button";
+
+import FORM_STEPS from "../form-steps";
 
 interface AnimatedNumberProps {
   value: string | null;

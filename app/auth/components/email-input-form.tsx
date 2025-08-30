@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 import { emailOtp } from "@/lib/auth-client";
 
-import { FORM_STEPS } from "../sign-in/page";
+import FORM_STEPS from "../form-steps";
 
 export default function EmailInputForm({
   email,

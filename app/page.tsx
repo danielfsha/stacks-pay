@@ -1,13 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
-
-const Header = dynamic(() => import("../components/header"), { ssr: false });
+import AnalyticsDashboard from "@/components/analytics-dashboard";
 
 export default function Page() {
   return (
-    <div>
-      <Header />
-    </div>
+    <>
+      <AnalyticsDashboard />
+    </>
   );
 }

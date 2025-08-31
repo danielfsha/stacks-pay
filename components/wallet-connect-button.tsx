@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { connect, disconnect, isConnected } from "@stacks/connect";
 import { Button } from "@/components/ui/button";
 
+import Image from "next/image";
+
 import { cn } from "@/lib/utils";
 
 interface WalletConnectButtonProps {
@@ -56,9 +58,16 @@ export default function WalletConnectButton({
           Connect Wallet
         </Button>
       ) : (
-        <Button onClick={disconnectWallet} className={cn(className)}>
-          Disconnect
-        </Button>
+        <div className="flex items-center space-x-2">
+          <Button variant="tertiary" className="px-2 py-0">
+            <Image width={20} height={20} alt="USD" src="/logo/icon.svg" />
+            Stacks
+            {/* <ChevronDown size={14} /> */}
+          </Button>
+          <Button onClick={disconnectWallet} className={cn(className)}>
+            0xA3...F6B2
+          </Button>
+        </div>
       )}
     </>
   );

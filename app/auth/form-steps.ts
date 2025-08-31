@@ -1,4 +1,5 @@
 import AnimatedOTP from "./components/animated-otp";
+import ConnectAndSign from "./components/connect-and-sign";
 import EmailInputForm from "./components/email-input-form";
 
 const FORM_STEPS = [
@@ -11,6 +12,11 @@ const FORM_STEPS = [
     id: "otp",
     description: "verify the sent OTP",
     component: AnimatedOTP,
+  },
+  {
+    id: "wallet",
+    description: "Connect wallet and sign transaction",
+    component: ConnectAndSign, // Replace with actual WalletConnect component
   },
 ];
 

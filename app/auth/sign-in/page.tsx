@@ -5,11 +5,12 @@ import Image from "next/image";
 
 import { signIn } from "@/lib/auth-client";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 import WalletConnectButton from "@/components/wallet-connect-button";
 
 import FORM_STEPS from "../form-steps";
+import { cn } from "@/lib/utils";
 
 export default function SignInPage() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -29,8 +30,6 @@ export default function SignInPage() {
 
   const StepComponent = FORM_STEPS[currentStep].component;
 
-  console.log("Current Step:", currentStep);
-
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-[352px] space-y-[24px]">
       <Image
@@ -48,8 +47,8 @@ export default function SignInPage() {
 
       {currentStep === 2 && (
         <p className="text-center w-full text-[14px] text-[#505154] font-medium ">
-          Connect your wallet and sign transaction <br /> to verify the
-          ownership of the account
+          Connect your wallet and sign transaction to verify the ownership of
+          the account
         </p>
       )}
 
@@ -96,7 +95,14 @@ export default function SignInPage() {
               Sign In with Github
             </Button>
 
-            <WalletConnectButton className="w-full" />
+            <WalletConnectButton
+              className={cn(
+                "w-full",
+                buttonVariants({
+                  variant: "secondary",
+                })
+              )}
+            />
           </div>
         </>
       )}

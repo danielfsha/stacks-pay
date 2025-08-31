@@ -32,10 +32,10 @@ export default function RootLayout({
             <></>
           </AppSidebar>
 
-          <div className="h-full flex-1">
+          <div className="h-full flex-1 flex flex-col">
             <Header />
 
-            <main className="w-full max-w-screen-lg h-full mx-auto overflow-y-scroll pb-16">
+            <main className="w-full h-full mx-auto overflow-y-scroll pb-16">
               {children}
             </main>
           </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useSession } from "@/lib/auth-client";
 
 import {
   Sidebar,
@@ -49,6 +50,7 @@ export default function AppSidebar({
 }) {
   // remove the sidebar on the sign-in page
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   if (pathname === "/auth/sign-in" || pathname === "/auth/sign-up") {
     return <>{children}</>;
@@ -82,14 +84,18 @@ export default function AppSidebar({
         </SidebarGroup>
 
         <SidebarGroup>
-          <div className="flex items-center justify-start space-x-[10px] px-3 py-2 text-[14px] font-medium rounded-[8px] hover:bg-[#F5F5F5]">
-            <Avatar className="w-[24px] h-[24px] rounded-lg overflow-hidden">
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
+          {session && (
+            <div className="flex items-center justify-start space-x-[10px] px-3 py-2 text-[14px] font-medium rounded-[8px] hover:bg-[#F5F5F5]">
+              <Avatar className="w-[24px] h-[24px] rounded-lg overflow-hidden">
+                <AvatarImage src={`${session?.user.image}`} />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
 
-            <span className="text-[15px] font-medium w-full">daniel</span>
-          </div>
+              <span className="text-[15px] font-medium w-full">
+                {session.user.name}
+              </span>
+            </div>
+          )}
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter />

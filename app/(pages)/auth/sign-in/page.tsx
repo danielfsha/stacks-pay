@@ -1,20 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
-import { signIn } from "@/lib/auth-client";
+import { signIn, useSession } from "@/lib/auth-client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
-
-import WalletConnectButton from "@/components/wallet-connect-button";
+import { Button } from "@/components/ui/button";
 
 import FORM_STEPS from "../form-steps";
-import { cn } from "@/lib/utils";
 
 export default function SignInPage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [email, setEmail] = useState("");
+
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session) {
+      redirect("/");
+    }
+  }, [session]);
 
   const signInWithGoogle = async () => {
     const data = await signIn.social({
@@ -94,15 +101,6 @@ export default function SignInPage() {
               />
               Sign In with Github
             </Button>
-
-            <WalletConnectButton
-              className={cn(
-                "w-full",
-                buttonVariants({
-                  variant: "secondary",
-                })
-              )}
-            />
           </div>
         </>
       )}

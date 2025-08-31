@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 import { emailOtp } from "@/lib/auth-client";
 
-import FORM_STEPS from "../form-steps";
+import FORM_STEPS from "../app/(pages)/auth/form-steps";
 
 export default function EmailInputForm({
   email,
@@ -35,6 +35,9 @@ export default function EmailInputForm({
         setCurrentStep(
           currentStep < FORM_STEPS.length - 1 ? currentStep + 1 : currentStep
         );
+
+        console.log("OTP sent to email:", email);
+        console.log(currentStep);
       }
       console.log(data);
     } catch (error) {

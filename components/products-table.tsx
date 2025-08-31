@@ -9,6 +9,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  Row,
   SortingState,
   useReactTable,
   VisibilityState,
@@ -22,7 +23,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -34,7 +34,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import {
   ChevronDown,
   MoreHorizontal,
@@ -71,8 +71,8 @@ const data: Product[] = [
   },
 ];
 
-function ProductCell({ row }: { row: any }) {
-  const product = row.original as Product;
+function ProductCell({ row }: { row: Row<Product> }) {
+  const product = row.original;
   return (
     <div className="flex items-center space-x-3">
       <div className="flex flex-col">

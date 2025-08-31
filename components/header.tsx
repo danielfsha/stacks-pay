@@ -13,12 +13,12 @@ import { Search, Slash } from "lucide-react";
 export default function Header() {
   const pathname = usePathname();
 
-  if (pathname === "/auth/sign-in" || pathname === "/auth/sign-up") {
+  if (pathname === "/auth/sign-in" || pathname === "/checkout") {
     return <></>;
   }
 
   return (
-    <header className="p-4 border-b border-[#EEEFF1] h-[46px] flex justify-between items-center">
+    <header className="p-2  border-b border-[#EEEFF1] h-[46px] flex justify-between items-center lg:p-4">
       <SidebarTrigger className={cn(buttonVariants({ variant: "ghost" }))}>
         <Image
           width={131}
@@ -28,7 +28,7 @@ export default function Header() {
         />
       </SidebarTrigger>
 
-      <div className="w-full max-w-screen-md mx-auto flex justify-center items-center border-[#EEEFF1] px-4 py-2 space-x-2 space-y-0">
+      <div className="hidden w-full max-w-screen-md mx-auto lg:flex justify-center items-center border-[#EEEFF1] px-4 py-2 space-x-2 space-y-0">
         <div className="flex-1">
           <Input placeholder="Quick actions" className="w-full" />
         </div>

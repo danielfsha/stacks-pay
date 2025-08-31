@@ -10,7 +10,7 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
   {
     label: "Home",
-    href: "/",
+    href: "/home",
     icon: <Image src="/icons/House.svg" alt="Home" width={18} height={18} />,
   },
   {
@@ -76,6 +76,11 @@ export interface SupportedCurrency {
 }
 export const SUPPORTED_CURRENCIES = [
   {
+    image: "/sBTC-logo/secondary.svg",
+    name: "sBTC",
+    symbol: "sBTC",
+  },
+  {
     image: "/country-icons/united-states-of-america.svg",
     name: "Dollar",
     symbol: "USD",
@@ -89,10 +94,5 @@ export const SUPPORTED_CURRENCIES = [
     image: "/country-icons/european-union.svg",
     name: "EURO",
     symbol: "EUR",
-  },
-  {
-    image: "/sBTC-logo/secondary.svg",
-    name: "sBTC",
-    symbol: "sBTC",
   },
 ];

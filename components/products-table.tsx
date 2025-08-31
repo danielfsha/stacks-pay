@@ -217,7 +217,7 @@ export function ProductsTable() {
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between py-4 space-x-2 w-full">
         <Input
           placeholder="Filter products..."
           value={String(table.getColumn("name")?.getFilterValue() ?? "")}

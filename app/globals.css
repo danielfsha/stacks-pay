@@ -93,3 +93,12 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+input {
+  border: none;
+}
+
+input:focus {
+  border: none;
+  outline: none;
+}

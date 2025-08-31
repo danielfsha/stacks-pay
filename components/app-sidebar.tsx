@@ -23,18 +23,17 @@ export interface SidebarItemProps {
     label: string;
     href: string;
     icon: React.ReactNode;
-    pathname?: string;
   };
   pathname: string;
 }
 
-export function SidebarItem({ item }: SidebarItemProps) {
+export function SidebarItem({ item, pathname }: SidebarItemProps) {
   return (
     <Link
       key={item.href}
       href={item.href}
       className={`h-[28px] space-x-[6px] flex items-center px-3 py-2 text-[14px] font-medium rounded-[8px] hover:bg-[#F5F5F5] ${
-        item.pathname === item.href
+        pathname == item.href
           ? "bg-[#E6E8EB] text-black"
           : "text-[#505154] hover:text-black"
       }`}
@@ -54,13 +53,13 @@ export default function AppSidebar({
   const pathname = usePathname();
   const { data: session } = useSession();
 
-  if (pathname === "/auth/sign-in" || pathname === "/auth/sign-up") {
+  if (pathname === "/auth/sign-in" || pathname === "/checkout") {
     return <>{children}</>;
   }
 
   return (
     <Sidebar>
-      <SidebarHeader className="px-2 border-b border-[#EEEFF1] h-[46px] flex">
+      <SidebarHeader className="px-4 border-b border-[#EEEFF1] h-[46px] flex">
         <Image
           width={135}
           height={27}

@@ -229,7 +229,7 @@ export default function AnalyticsDashboard() {
         {/* card 3 */}
         <Card className="w-full">
           <CardHeader>
-            <CardDescription>New customers</CardDescription>
+            <CardDescription>Total customers</CardDescription>
             <CardTitle>0</CardTitle>
           </CardHeader>
           <CardContent>

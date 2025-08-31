@@ -40,7 +40,7 @@ const PRODUCTS_STAT = [
 
 export default function ProductsPage() {
   return (
-    <div className="max-w-screen-lg mx-auto">
+    <div className="max-w-screen-lg mx-auto space-y-3">
       <header className="flex items-center justify-between py-4">
         <h1>Products</h1>
         <div className="flex items-center justify-center space-x-2">
@@ -105,7 +105,7 @@ export default function ProductsPage() {
         {PRODUCTS_STAT.map((product, index) => (
           <Card
             key={index}
-            className="flex-1 shadow-[inset_0_0px_0px_1px_rgba(0,0,0,0.1),0_2px_4px_-2px_rgba(38,109,240,0.12),0_3px_6px_-2px_rgba(38,109,240,0.18)] p-1"
+            className="flex-1 shadow-[0_0px_2px_0px_rgba(28,40,64,.18),0_1px_3px_0px_rgba(24,41,75,0.04)] p-1"
           >
             <CardHeader>
               <CardTitle>{product.count}</CardTitle>

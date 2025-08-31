@@ -48,6 +48,11 @@ export const auth = betterAuth({
               subject: "StacksPay OTP for Sign-In",
               react: EmailTemplate({ firstName: "John", OTP: otp }),
             });
+
+            console.log(data);
+            if (error) {
+              console.error(error);
+            }
           } catch (error) {
             throw error;
           }

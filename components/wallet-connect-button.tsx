@@ -1,20 +1,25 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { connect, disconnect, isConnected } from "@stacks/connect";
+import { connect, disconnect, isConnected, request } from "@stacks/connect";
 import { Button } from "@/components/ui/button";
-
 import Image from "next/image";
-
 import { cn } from "@/lib/utils";
 
 interface WalletConnectButtonProps {
   className?: string;
 }
 
+// Helper function to shorten the wallet address
+function shortenAddress(address: string) {
+  if (!address) return "";
+  return address.slice(0, 6) + "...." + address.slice(-6);
+}
+
 export default function WalletConnectButton({
   className,
 }: WalletConnectButtonProps) {
+  const [address, setAddress] = useState("");
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
@@ -29,8 +34,6 @@ export default function WalletConnectButton({
       const connectionStatus = isConnected();
       if (connectionStatus !== connected) {
         setConnected(connectionStatus);
-        if (connectionStatus) {
-        }
       }
     };
 
@@ -49,6 +52,7 @@ export default function WalletConnectButton({
   const disconnectWallet = () => {
     disconnect();
     setConnected(false);
+    setAddress("");
   };
 
   return (
@@ -62,10 +66,9 @@ export default function WalletConnectButton({
           <Button variant="tertiary" className="px-2 py-0">
             <Image width={20} height={20} alt="USD" src="/logo/icon.svg" />
             Stacks
-            {/* <ChevronDown size={14} /> */}
           </Button>
           <Button onClick={disconnectWallet} className={cn(className)}>
-            0xA3...F6B2
+            {shortenAddress("tb1q4x3rwrqyu7jf8nhkvld2dxkd68vt89des50mwt")}
           </Button>
         </div>
       )}

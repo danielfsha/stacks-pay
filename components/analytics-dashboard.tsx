@@ -7,7 +7,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -17,34 +16,47 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { SUPPORTED_CURRENCIES } from "@/lib/constants";
+import { useState } from "react";
 
 export const description = "A linear area chart";
 
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 120 },
-  { month: "July", desktop: 124 },
-  { month: "Augest", desktop: 34 },
-  { month: "September", desktop: 92 },
-];
-
 // const chartData = [
-//   { month: "January", desktop: 0 },
-//   { month: "February", desktop: 0 },
-//   { month: "March", desktop: 0 },
-//   { month: "April", desktop: 0 },
-//   { month: "May", desktop: 0 },
-//   { month: "June", desktop: 0 },
-//   { month: "July", desktop: 0 },
-//   { month: "Augest", desktop: 0 },
-//   { month: "September", desktop: 0 },
+//   { month: "January", desktop: 186 },
+//   { month: "February", desktop: 305 },
+//   { month: "March", desktop: 237 },
+//   { month: "April", desktop: 73 },
+//   { month: "May", desktop: 209 },
+//   { month: "June", desktop: 120 },
+//   { month: "July", desktop: 124 },
+//   { month: "Augest", desktop: 34 },
+//   { month: "September", desktop: 92 },
 // ];
+
+const chartData = [
+  { month: "January", desktop: 0 },
+  { month: "February", desktop: 0 },
+  { month: "March", desktop: 0 },
+  { month: "April", desktop: 0 },
+  { month: "May", desktop: 0 },
+  { month: "June", desktop: 0 },
+  { month: "July", desktop: 0 },
+  { month: "Augest", desktop: 0 },
+  { month: "September", desktop: 0 },
+];
 
 const chartConfig = {
   desktop: {
@@ -54,23 +66,59 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function AnalyticsDashboard() {
+  const [activeCurrency, setActiveCurrency] = useState(SUPPORTED_CURRENCIES[0]);
   return (
     <div className="flex flex-col space-y-4">
       {/* header */}
-      <header className="flex items-center justify-between py-4 px-4">
+      <header className="flex items-center justify-between py-4">
         <h1>Today</h1>
         <div className="flex items-center justify-center space-x-2">
-          <Button variant="tertiary" className="px-2">
-            <Image
-              width={20}
-              height={20}
-              alt="USD"
-              src="/country-icons/united-states-of-america.svg"
-            />
-            USD
-            <ChevronDown size={14} />
-          </Button>
-          <Button>New product</Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="px-2">
+                <Image
+                  width={20}
+                  height={20}
+                  alt={activeCurrency.symbol}
+                  src={activeCurrency.image}
+                />
+                {activeCurrency.symbol}
+                <ChevronDown size={14} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end">
+              <DropdownMenuLabel>Select Currency</DropdownMenuLabel>
+              <DropdownMenuGroup>
+                {SUPPORTED_CURRENCIES.map((currency, index) => (
+                  <div
+                    onClick={() => setActiveCurrency(currency)}
+                    key={`${currency.name}-${currency.symbol}`}
+                  >
+                    <DropdownMenuItem>
+                      <Image
+                        width={20}
+                        height={20}
+                        alt={currency.symbol}
+                        src={currency.image}
+                      />
+                      {currency.symbol}
+                    </DropdownMenuItem>
+                  </div>
+                ))}
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Link
+            href={"/products"}
+            className={cn(
+              buttonVariants({
+                variant: "default",
+              })
+            )}
+          >
+            New product
+          </Link>
         </div>
       </header>
       <Card className="w-full">

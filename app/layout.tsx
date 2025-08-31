@@ -24,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
+        suppressHydrationWarning
         className={`${inter.className} antialiased w-screen h-screen overflow-hidden`}
       >
         <SidebarProvider className="flex h-full w-full items-start justify-start">
@@ -35,7 +36,7 @@ export default function RootLayout({
           <div className="h-full flex-1 flex flex-col">
             <Header />
 
-            <main className="w-full h-full mx-auto overflow-y-scroll pb-16">
+            <main className="w-full h-full mx-auto overflow-y-scroll pb-16 p-2">
               {children}
             </main>
           </div>

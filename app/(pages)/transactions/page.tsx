@@ -1,3 +1,3 @@
 export default function TransactionsPage() {
-  return <div>Transactions Page</div>;
+  return <div className="max-w-screen-lg mx-auto">Transactions Page</div>;
 }

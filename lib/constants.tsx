@@ -25,7 +25,7 @@ export const NAV_ITEMS: NavItem[] = [
     href: "/transactions",
     icon: (
       <Image
-        src="/icons/CurrencyBTC.svg"
+        src="/icons/CurrencyBtc.svg"
         alt="Transactions"
         width={18}
         height={18}

@@ -32,7 +32,7 @@ export function SidebarItem({ item, pathname }: SidebarItemProps) {
     <Link
       key={item.href}
       href={item.href}
-      className={`h-[32px] space-x-[6px] flex items-center px-3 py-2 text-[14px] font-medium rounded-[8px] hover:bg-[#F5F5F5] ${
+      className={`h-[32px] space-x-[6px] flex items-center px-3 py-2 text-[14px] font-medium rounded-[8px] hover:bg-[#F5F5F5]  ${
         pathname == item.href
           ? "bg-[#E6E8EB] text-black"
           : "text-[#505154] hover:text-black"
@@ -84,7 +84,7 @@ export default function AppSidebar({
           </div>
         </div>
 
-        <SidebarGroup className="flex flex-col w-full border-[#EEEFF1] border-b border-t">
+        <SidebarGroup className="flex flex-col w-full border-[#EEEFF1] border-b border-t space-y-1">
           {NAV_ITEMS.map((item) => (
             <SidebarItem key={item.href} item={item} pathname={pathname} />
           ))}

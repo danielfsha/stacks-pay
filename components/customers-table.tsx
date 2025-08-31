@@ -43,41 +43,43 @@ import {
   Trash2,
 } from "lucide-react";
 
-export type Product = {
+export type Customer = {
   id: string;
-  name: string;
-  createdAt: string; // ISO date string
-  lastUpdated: string; // ISO date string
+  wallet: string;
+  email: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
-const data: Product[] = [
+const data: Customer[] = [
   {
-    id: "p1",
-    name: "Modern Lamp",
+    id: "c1",
+    wallet: "stack1qxyz...",
+    email: "alice@example.com",
     createdAt: "2023-08-01T12:00:00Z",
-    lastUpdated: "2023-08-20T09:30:00Z",
+    updatedAt: "2023-08-20T09:30:00Z",
   },
   {
-    id: "p2",
-    name: "Wooden Chair",
+    id: "c2",
+    wallet: "stack1qabcd...",
+    email: "bob@example.com",
     createdAt: "2023-07-15T14:15:00Z",
-    lastUpdated: "2023-08-15T10:50:00Z",
+    updatedAt: "2023-08-15T10:50:00Z",
   },
   {
-    id: "p3",
-    name: "Bluetooth Speaker",
+    id: "c3",
+    wallet: "stack1qefgh...",
+    email: null,
     createdAt: "2023-06-05T08:00:00Z",
-    lastUpdated: "2023-08-10T12:00:00Z",
+    updatedAt: "2023-08-10T12:00:00Z",
   },
 ];
 
-function ProductCell({ row }: { row: Row<Product> }) {
-  const product = row.original;
+function WalletCell({ row }: { row: Row<Customer> }) {
+  const customer = row.original;
   return (
-    <div className="flex items-center space-x-3">
-      <div className="flex flex-col">
-        <span className="font-medium">{product.name}</span>
-      </div>
+    <div className="flex flex-col">
+      <span className="font-medium break-all">{customer.wallet}</span>
     </div>
   );
 }
@@ -91,7 +93,7 @@ function formatDate(dateStr: string) {
   });
 }
 
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<Customer>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -119,10 +121,15 @@ export const columns: ColumnDef<Product>[] = [
     size: 20,
   },
   {
-    accessorKey: "name",
-    id: "name",
-    header: "Product",
-    cell: ProductCell,
+    accessorKey: "wallet",
+    header: "Wallet",
+    cell: WalletCell,
+    filterFn: "includesString",
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+    cell: ({ row }) => <div>{row.getValue("email") ?? "-"}</div>,
     filterFn: "includesString",
   },
   {
@@ -140,24 +147,24 @@ export const columns: ColumnDef<Product>[] = [
     sortingFn: "datetime",
   },
   {
-    accessorKey: "lastUpdated",
+    accessorKey: "updatedAt",
     header: ({ column }) => (
       <Button
         variant="ghost"
         className="px-0"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Last Updated <ArrowUpDown className="ml-1 h-4 w-4" />
+        Updated At <ArrowUpDown className="ml-1 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{formatDate(row.getValue("lastUpdated"))}</div>,
+    cell: ({ row }) => <div>{formatDate(row.getValue("updatedAt"))}</div>,
     sortingFn: "datetime",
   },
   {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const product = row.original;
+      const customer = row.original;
       return (
         <div className="flex justify-end">
           <DropdownMenu>
@@ -170,12 +177,12 @@ export const columns: ColumnDef<Product>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
-                onClick={() => alert(`Edit product ${product.name}`)}
+                onClick={() => alert(`Edit customer ${customer.wallet}`)}
               >
                 <Edit className="mr-2 h-4 w-4" /> Edit
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => alert(`Delete product ${product.name}`)}
+                onClick={() => alert(`Delete customer ${customer.wallet}`)}
               >
                 <Trash2 className="mr-2 h-4 w-4 text-red-600" /> Delete
               </DropdownMenuItem>
@@ -187,7 +194,7 @@ export const columns: ColumnDef<Product>[] = [
   },
 ];
 
-export function ProductsTable() {
+export function CustomersTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -221,10 +228,10 @@ export function ProductsTable() {
     <div className="w-full">
       <div className="flex items-center justify-between py-4 space-x-2 w-full">
         <Input
-          placeholder="Filter products..."
-          value={String(table.getColumn("name")?.getFilterValue() ?? "")}
+          placeholder="Filter wallets or emails..."
+          value={String(table.getColumn("wallet")?.getFilterValue() ?? "")}
           onChange={(e) =>
-            table.getColumn("name")?.setFilterValue(e.target.value)
+            table.getColumn("wallet")?.setFilterValue(e.target.value)
           }
           className="max-w-sm"
         />
@@ -251,7 +258,7 @@ export function ProductsTable() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="overflow-hidden rounded-md border">
+      <div className="overflow-hidden">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

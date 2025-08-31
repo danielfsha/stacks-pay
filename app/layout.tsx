@@ -4,6 +4,7 @@ import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/app-sidebar";
 import Header from "@/components/header";
+import { QuickActionsCommandPalette } from "@/components/quick-actions-command-palette";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,9 +33,10 @@ export default function RootLayout({
             {/*   // this fixes an issue with not having children in the sidebar */}
             <></>
           </AppSidebar>
-
           <div className="h-full flex-1 flex flex-col">
             <Header />
+
+            <QuickActionsCommandPalette />
 
             <main className="w-full h-full mx-auto overflow-y-scroll pb-16 p-2">
               {children}

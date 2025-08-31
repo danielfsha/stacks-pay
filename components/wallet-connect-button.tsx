@@ -5,6 +5,7 @@ import { connect, disconnect, isConnected, request } from "@stacks/connect";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { ChevronDown } from "lucide-react";
 
 interface WalletConnectButtonProps {
   className?: string;
@@ -66,6 +67,7 @@ export default function WalletConnectButton({
           <Button variant="tertiary" className="px-2 py-0">
             <Image width={20} height={20} alt="USD" src="/logo/icon.svg" />
             Stacks
+            <ChevronDown className="size-8" />
           </Button>
           <Button onClick={disconnectWallet} className={cn(className)}>
             {shortenAddress("tb1q4x3rwrqyu7jf8nhkvld2dxkd68vt89des50mwt")}

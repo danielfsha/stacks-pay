@@ -43,44 +43,37 @@ import {
   Trash2,
 } from "lucide-react";
 
-export type Product = {
+export type Transaction = {
   id: string;
-  name: string;
-  createdAt: string; // ISO date string
-  lastUpdated: string; // ISO date string
+  amount: string;
+  currencyId: string;
+  status: string;
+  createdAt: string;
 };
 
-const data: Product[] = [
+const data: Transaction[] = [
   {
-    id: "p1",
-    name: "Modern Lamp",
-    createdAt: "2023-08-01T12:00:00Z",
-    lastUpdated: "2023-08-20T09:30:00Z",
+    id: "t1",
+    amount: "0.01",
+    currencyId: "sBTC",
+    status: "completed",
+    createdAt: "2023-08-21T10:00:00Z",
   },
   {
-    id: "p2",
-    name: "Wooden Chair",
-    createdAt: "2023-07-15T14:15:00Z",
-    lastUpdated: "2023-08-15T10:50:00Z",
+    id: "t2",
+    amount: "0.05",
+    currencyId: "sBTC",
+    status: "pending",
+    createdAt: "2023-08-18T15:30:00Z",
   },
   {
-    id: "p3",
-    name: "Bluetooth Speaker",
-    createdAt: "2023-06-05T08:00:00Z",
-    lastUpdated: "2023-08-10T12:00:00Z",
+    id: "t3",
+    amount: "0.02",
+    currencyId: "sBTC",
+    status: "failed",
+    createdAt: "2023-08-10T09:45:00Z",
   },
 ];
-
-function ProductCell({ row }: { row: Row<Product> }) {
-  const product = row.original;
-  return (
-    <div className="flex items-center space-x-3">
-      <div className="flex flex-col">
-        <span className="font-medium">{product.name}</span>
-      </div>
-    </div>
-  );
-}
 
 function formatDate(dateStr: string) {
   const date = new Date(dateStr);
@@ -91,7 +84,7 @@ function formatDate(dateStr: string) {
   });
 }
 
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<Transaction>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -119,11 +112,29 @@ export const columns: ColumnDef<Product>[] = [
     size: 20,
   },
   {
-    accessorKey: "name",
-    id: "name",
-    header: "Product",
-    cell: ProductCell,
+    accessorKey: "amount",
+    header: "Amount",
+    cell: ({ row }) => <div>{row.getValue("amount")}</div>,
     filterFn: "includesString",
+  },
+  {
+    accessorKey: "currencyId",
+    header: "Currency",
+    cell: ({ row }) => <div>{row.getValue("currencyId")}</div>,
+    filterFn: "includesString",
+  },
+  {
+    accessorKey: "status",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        className="px-0"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Status <ArrowUpDown className="ml-1 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <div>{row.getValue("status")}</div>,
   },
   {
     accessorKey: "createdAt",
@@ -140,24 +151,10 @@ export const columns: ColumnDef<Product>[] = [
     sortingFn: "datetime",
   },
   {
-    accessorKey: "lastUpdated",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        className="px-0"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Last Updated <ArrowUpDown className="ml-1 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => <div>{formatDate(row.getValue("lastUpdated"))}</div>,
-    sortingFn: "datetime",
-  },
-  {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const product = row.original;
+      const transaction = row.original;
       return (
         <div className="flex justify-end">
           <DropdownMenu>
@@ -168,14 +165,14 @@ export const columns: ColumnDef<Product>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
               <DropdownMenuItem
-                onClick={() => alert(`Edit product ${product.name}`)}
+                onClick={() => alert(`Edit transaction ${transaction.id}`)}
               >
                 <Edit className="mr-2 h-4 w-4" /> Edit
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => alert(`Delete product ${product.name}`)}
+                onClick={() => alert(`Delete transaction ${transaction.id}`)}
               >
                 <Trash2 className="mr-2 h-4 w-4 text-red-600" /> Delete
               </DropdownMenuItem>
@@ -187,7 +184,7 @@ export const columns: ColumnDef<Product>[] = [
   },
 ];
 
-export function ProductsTable() {
+export function TransactionsTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -221,10 +218,10 @@ export function ProductsTable() {
     <div className="w-full">
       <div className="flex items-center justify-between py-4 space-x-2 w-full">
         <Input
-          placeholder="Filter products..."
-          value={String(table.getColumn("name")?.getFilterValue() ?? "")}
+          placeholder="Filter transactions..."
+          value={String(table.getColumn("status")?.getFilterValue() ?? "")}
           onChange={(e) =>
-            table.getColumn("name")?.setFilterValue(e.target.value)
+            table.getColumn("status")?.setFilterValue(e.target.value)
           }
           className="max-w-sm"
         />
@@ -251,7 +248,7 @@ export function ProductsTable() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="overflow-hidden rounded-md border">
+      <div className="overflow-hidden">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -279,7 +276,9 @@ export function ProductsTable() {
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className={cell.column.id === "actions" ? "px-0" : ""}
+                      className={
+                        cell.column.id === "actions" ? "text-right" : ""
+                      }
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
